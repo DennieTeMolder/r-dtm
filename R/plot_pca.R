@@ -35,15 +35,14 @@ plot_pca <- function(pca,
 
   if (fix_scales) {
     # Ensure equal scales
-    limits <- unlist(pca$x[,comps])
-    limits <- c(min(limits), max(limits))
+    limits <- range(unlist(df[, comps]))
     p <- p + ggplot2::xlim(limits) + ggplot2::ylim(limits)
   }
 
   if (!is.null(names))
     p <- p + ggrepel::geom_text_repel(point.padding = 0.1)
 
-  return(p)
+  p
 }
 
 # Percentage of explained variation

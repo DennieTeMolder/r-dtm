@@ -1,0 +1,26 @@
+Package: dtm
+Title: Personal library
+Version: 0.1.0
+Authors@R: 
+    person("Dennie", "te Molder", , , role = c("aut", "cre"),)
+Description: Personal library of R functions.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    ggplot2,
+    ggrepel,
+    ggsci,
+    htmlwidgets,
+    plotly,
+    pryr,
+    readr,
+    readxl,
+    rlang,
+    rrBLUP,
+    stringr,
+    tibble,
+    tidyr,
+    zoo

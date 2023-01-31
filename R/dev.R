@@ -22,10 +22,10 @@ smooth_physical <- function(x, pos, window_size = 1e5) {
 
 ##' @export
 sliding_window <- function(end,
-                          start = 1,
-                          size = 2e6,
-                          jump = NULL,
-                          contig = NULL) {
+                           start = 1,
+                           size = 2e6,
+                           jump = NULL,
+                           contig = NULL) {
   if (is.null(jump))
     jump <- size
   # Compute number of windows

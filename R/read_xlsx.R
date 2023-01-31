@@ -1,4 +1,4 @@
 ##' @export
-read_xlsx <- function(path, na = c("", "NA"), ...) {
-  readxl::read_excel(path, na = na, ...)
+read_xlsx <- function(file, na = c("", "NA"), ...) {
+  readxl::read_excel(file, na = na, ...)
 }

@@ -3,16 +3,16 @@
 plot_pca <- function(pca,
                      comps = 1:2,
                      names = NULL,
-                     colorBy = NULL,
-                     fixScales = FALSE,
+                     color_by = NULL,
+                     fix_scales = FALSE,
                      ...) {
   stopifnot(class(pca) == "prcomp")
   stopifnot(is.integer(comps))
   stopifnot(length(comps) == 2)
   if (!is.null(names))
     stopifnot(nrow(pca$x) == length(names))
-  if (!is.null(colorBy))
-    stopifnot(nrow(pca$x) == length(colorBy))
+  if (!is.null(color_by))
+    stopifnot(nrow(pca$x) == length(color_by))
 
   cols <- paste0("PC", comps)
 
@@ -24,16 +24,16 @@ plot_pca <- function(pca,
   if (!is.null(names))
     df <- cbind(df, names)
 
-  if (!is.null(colorBy))
-    df <- cbind(df, colorBy)
+  if (!is.null(color_by))
+    df <- cbind(df, color_by)
 
-  p <- ggplot2::ggplot(df, ggplot2::aes(.data[[cols[1]]], .data[[cols[2]]], label = names, color = colorBy)) +
+  p <- ggplot2::ggplot(df, ggplot2::aes(.data[[cols[1]]], .data[[cols[2]]], label = names, color = color_by)) +
     ggplot2::geom_point(...) +
     ggplot2::xlab(sprintf("PC%d (%.2f%%)", comps[1], explained[comps[1]])) +
     ggplot2::ylab(sprintf("PC%d (%.2f%%)", comps[2], explained[comps[2]])) +
     ggsci::scale_color_lancet()
 
-  if (fixScales) {
+  if (fix_scales) {
     # Ensure equal scales
     limits <- unlist(pca$x[,comps])
     limits <- c(min(limits), max(limits))

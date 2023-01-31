@@ -2,7 +2,7 @@ Package: dtm
 Title: Personal library
 Version: 0.1.0
 Authors@R: 
-    person("Dennie", "te Molder", , , role = c("aut", "cre"),)
+    person("Dennie", "te Molder", , "use@github.com", role = c("aut", "cre"),)
 Description: Personal library of R functions.
 License: GPL (>= 3)
 Encoding: UTF-8

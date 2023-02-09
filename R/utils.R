@@ -44,7 +44,7 @@ num_unique <- function(x, na_rm = TRUE) {
 ##' @export
 seq_to_last <- function(from, to, ...) {
   x <- seq(from, to, ...)
-  if (x[length(x)] != to)
+  if (tail(x, n = 1) != to)
     x <- c(x, to)
   x
 }

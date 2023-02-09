@@ -4,8 +4,11 @@ assign_bins <- function(x, bin_size, adjust = "closest") {
 
   ranges <- range(x)
   span <- diff(ranges)
-  bin_size <- adjust_window(bin_size, span, adjust)
 
+  if (span == 0)
+    return(rep(1, length(x)))
+
+  bin_size <- adjust_window(bin_size, span, adjust)
   breaks <- seq_to_last(min(ranges) - 1, max(ranges), bin_size)
   bins <- cut(x, breaks, labels = FALSE)
 

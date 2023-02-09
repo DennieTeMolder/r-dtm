@@ -2,6 +2,7 @@
 adjust_window <- function(window, span, adjust = "closest") {
   stopifnotsingle(window, class = "numeric")
   stopifnotsingle(span, class = "numeric")
+  stopifnot(span > 0)
 
   if (span <= window)
     return(span)

@@ -1,11 +1,3 @@
-### Dataframe/Tibble ------
-##' @export
-with_group_by <- function(df, ..., .f) {
-  stopifnot(is.data.frame(df))
-  stopifnot(is.function(.f))
-  dplyr::ungroup(.f(dplyr::group_by(df, ...)))
-}
-
 ### Binning/windows ------
 ##' @export
 smooth_physical <- function(x, pos, window_size = 1e5) {

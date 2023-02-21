@@ -10,12 +10,16 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     dplyr,
+    factoextra,
+    forcats,
     ggplot2,
+    ggpubr,
     ggrepel,
     ggsci,
     htmlwidgets,
     plotly,
     pryr,
+    purrr,
     readr,
     readxl,
     rlang,
@@ -24,3 +28,6 @@ Imports:
     tibble,
     tidyr,
     zoo
+Remotes:  
+    kassambara/factoextra,
+    kassambara/ggpubr

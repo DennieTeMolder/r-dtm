@@ -4,7 +4,6 @@ semi_join_reorder <- function(x, y, by, ...) {
   stopifnot(is.data.frame(x))
   stopifnot(is.data.frame(y) || is.vector(y))
   stopifnot(is.character(by))
-  stopifnot(by %in% colnames(y))
 
   has_names <- !is.null(names(by))
 
@@ -14,6 +13,7 @@ semi_join_reorder <- function(x, y, by, ...) {
     y <- tibble::tibble(y)
     colnames(y) <- by
   } else {
+    stopifnot(by %in% colnames(y))
     y <- y[, by, drop = FALSE]
   }
 

@@ -3,6 +3,7 @@
 plot_pca <- function(pca,
                      comps = 1:2,
                      names = NULL,
+                     name_size = 2.5,
                      color_by = NULL,
                      fix_scales = FALSE,
                      ...) {
@@ -40,7 +41,7 @@ plot_pca <- function(pca,
   }
 
   if (!is.null(names))
-    p <- p + ggrepel::geom_text_repel(point.padding = 0.1)
+    p <- p + ggrepel::geom_text_repel(point.padding = 0.1, size = name_size)
 
   p
 }

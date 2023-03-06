@@ -10,6 +10,7 @@ replace_na <- function(x, replacement) {
 
 ##' @export
 apply_switch <- function(x, ...) {
+  lifecycle::deprecate_soft("5-3-2023", "dtm::apply_switch", "dplyr::case_match")
   sapply(x, function(y) switch(y, ..., NA))
 }
 

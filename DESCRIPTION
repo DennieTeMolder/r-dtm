@@ -17,6 +17,7 @@ Imports:
     ggrepel,
     ggsci,
     htmlwidgets,
+    lifecycle,
     plotly,
     pryr,
     purrr,
@@ -28,6 +29,6 @@ Imports:
     tibble,
     tidyr,
     zoo
-Remotes:  
+Remotes: 
     kassambara/factoextra,
     kassambara/ggpubr

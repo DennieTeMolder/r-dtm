@@ -28,6 +28,7 @@ Imports:
     stringr,
     tibble,
     tidyr,
+    yaml,
     zoo
 Remotes: 
     kassambara/factoextra,

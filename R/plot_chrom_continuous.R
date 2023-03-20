@@ -22,18 +22,19 @@ plot_chrom_continuous <- function(data, aes = NULL, sizes = NULL) {
     sizes <- dplyr::filter(sizes, .data$chrom %in% used_chroms)
   }
 
+  # Compute position adjustment
+  size_order <- order(sizes$len, decreasing = TRUE)
+  adjust_pos <- cumsum(sizes$len[size_order])
+  adjust_pos <- c(0, utils::head(adjust_pos, n = -1))
+  names(adjust_pos) <- sizes$chrom[size_order]
+
+  # Modify aesthetic mappings
   aes <- .modify_aes(aes, x = .data$pos_adj)
   if (is.null(aes$text)) {
     .make_label <- function(chrom, pos)
       paste0(format(pos, big.mark = ",", trim = TRUE), "bp ", chrom)
     aes <- .modify_aes(aes, text = .make_label(.data$chrom, .data$pos))
   }
-
-  # Compute position adjustment
-  size_order <- order(sizes$len, decreasing = TRUE)
-  adjust_pos <- cumsum(sizes$len[size_order])
-  adjust_pos <- c(0, utils::head(adjust_pos, n = -1))
-  names(adjust_pos) <- sizes$chrom[size_order]
 
   # Compute x limits
   factor <- 0.04

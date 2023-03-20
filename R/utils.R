@@ -84,6 +84,8 @@ collapse <- function(x, delim = ", ") {
 }
 
 .modify_aes <- function(.aes, ...) {
+  stopifnot(is.list(.aes))
+  stopifnot(inherits(.aes, "uneval"))
   add_aes <- ggplot2::aes(...)
   if (is.null(.aes))
     return(add_aes)

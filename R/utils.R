@@ -83,3 +83,9 @@ collapse <- function(x, delim = ", ") {
   paste(x, collapse = delim)
 }
 
+.modify_aes <- function(.aes, ...) {
+  add_aes <- ggplot2::aes(...)
+  if (is.null(.aes))
+    return(add_aes)
+  utils::modifyList(.aes, add_aes)
+}

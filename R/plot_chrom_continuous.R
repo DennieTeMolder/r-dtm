@@ -22,10 +22,11 @@ plot_chrom_continuous <- function(data, aes = NULL, sizes = NULL) {
     sizes <- dplyr::filter(sizes, .data$chrom %in% used_chroms)
   }
 
-  if (is.null(aes)) {
-    aes <- ggplot2::aes(x = .data$pos_adj)
-  } else {
-    aes$x <- ggplot2::aes(x = .data$pos_adj)$x
+  aes <- .modify_aes(aes, x = .data$pos_adj)
+  if (is.null(aes$text)) {
+    .make_label <- function(chrom, pos)
+      paste0(format(pos, big.mark = ",", trim = TRUE), "bp ", chrom)
+    aes <- .modify_aes(aes, text = .make_label(.data$chrom, .data$pos))
   }
 
   # Compute position adjustment

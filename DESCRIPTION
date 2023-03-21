@@ -11,14 +11,12 @@ RoxygenNote: 7.2.3
 Imports: 
     dplyr,
     factoextra,
-    forcats,
     ggplot2,
     ggpubr,
     ggrepel,
     ggsci,
     htmlwidgets,
     lifecycle,
-    lubridate,
     plotly,
     pryr,
     purrr,
@@ -34,3 +32,5 @@ Imports:
 Remotes: 
     kassambara/factoextra,
     kassambara/ggpubr
+Depends: 
+    tidyverse

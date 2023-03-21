@@ -1,6 +1,6 @@
-# Example: filter(x %in% 1:3)
+# Example: x <- 2:4; filter(x %in% 1:3)
 ##' @export
-filter <- function(x) {
+get_value <- function(x) {
   stopifnot(is.logical(x) || is.numeric(x))
 
   call <- substitute(x)

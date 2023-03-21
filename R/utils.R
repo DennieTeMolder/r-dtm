@@ -4,11 +4,6 @@ mem_size <- function(x) {
 }
 
 ##' @export
-replace_na <- function(x, replacement) {
-  ifelse(is.na(x), replacement, x)
-}
-
-##' @export
 apply_switch <- function(x, ...) {
   lifecycle::deprecate_soft("5-3-2023", "dtm::apply_switch", "dplyr::case_match")
   sapply(x, function(y) switch(y, ..., NA))
@@ -79,8 +74,9 @@ stopifnotsingle <- function(x, class = NULL) {
 }
 
 ##' @export
-collapse <- function(x, delim = ", ") {
-  paste(x, collapse = delim)
+str_collapse <- function(x, delim = ", ", ...) {
+  lifecycle::deprecate_soft("21-3-2023", "dtm::str_collapse", "stringr::str_flatten")
+  stringr::str_flatten(x, collapse = delim, ...)
 }
 
 .modify_aes <- function(.aes, ...) {

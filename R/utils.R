@@ -73,9 +73,7 @@ stopifnotsingle <- function(x, class = NULL) {
   invisible(x)
 }
 
-##' @export
-str_collapse <- function(x, delim = ", ", ...) {
-  lifecycle::deprecate_soft("21-3-2023", "dtm::str_collapse", "stringr::str_flatten")
+.collapse <- function(x, delim = ", ", ...) {
   stringr::str_flatten(x, collapse = delim, ...)
 }
 

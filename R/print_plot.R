@@ -1,5 +1,5 @@
 ##' @export
-# Print and save plot to filename at the same time unless `option(inhibit_save = TRUE)`.
+# Print and save plot to filename at the same time unless `option(dtm.nosave = TRUE)`.
 # If `option(print2pdf = TRUE)` a pdf is written to `tempdir()` instead of printing.
 print_plot <- function(p,
                        width = 7,
@@ -7,10 +7,10 @@ print_plot <- function(p,
                        filename = NULL,
                        path = NULL,
                        ...) {
-  print2pdf <- getOption("print2pdf", default = FALSE)
+  print2pdf <- isTRUE(getOption("dtm.print_plot") == "pdf")
 
   if (print2pdf) {
-    dir <- paste0(tempdir(check = TRUE), "/emacs_plots")
+    dir <- paste0(tempdir(check = TRUE), "/session_plots")
     n <- length(list.files(dir, pattern = "\\d{3}.pdf"))
     emacs_filename <- sprintf("%03d.pdf", n)
     emacs_file <- ggplot2::ggsave(emacs_filename, plot = p, path = dir,
@@ -22,7 +22,7 @@ print_plot <- function(p,
   if (is.null(filename))
     return(invisible(p))
 
-  if (getOption("inhibit_save", default = FALSE)) {
+  if (isTRUE(getOption("dtm.nosave"))) {
     message("Saving to file inhibited.")
   } else {
     if (print2pdf && stringr::str_ends(filename, "\\.pdf")) {

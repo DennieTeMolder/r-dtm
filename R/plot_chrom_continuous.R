@@ -8,9 +8,11 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
   stopifnot(is.character(df$chrom), !is.na(df$chrom))
   stopifnot(is.numeric(df$pos), !is.na(df$pos))
   if (!is.null(sizes)) {
-    stopifnot(is.data.frame(sizes), ncol(sizes) == 2)
+    stopifnot(is.data.frame(sizes), dplyr::between(ncol(sizes), 2, 3))
     stopifnot(is.character(sizes[[1]]), !duplicated(sizes[[1]]))
     stopifnot(is.numeric(sizes[[2]]))
+    if (ncol(sizes) == 3)
+      stopifnot(is.character(sizes[[3]]))
 
     used_chroms <- unique(df$chrom)
     if (!all(used_chroms %in% sizes[[1]]))
@@ -33,6 +35,10 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
   names(adjust_pos) <- sizes$chrom[size_order]
   df$pos_adj <- df$pos + adjust_pos[df$chrom]
 
+  breaks <- adjust_pos
+  if (ncol(sizes) == 3)
+    names(breaks) <- sizes[[3]][size_order]
+
   # Modify aesthetic mappings
   aes <- .modify_aes(aes, x = .data$pos_adj)
   if (is.null(aes$text)) {
@@ -48,7 +54,7 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
 
   # Plot
   ggplot2::ggplot(df, aes) +
-    ggplot2::scale_x_continuous(breaks = adjust_pos, minor_breaks = NULL) +
+    ggplot2::scale_x_continuous(breaks = breaks, minor_breaks = NULL) +
     ggplot2::coord_cartesian(xlim = xlim) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 315, hjust = 0))
 }

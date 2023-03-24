@@ -2,8 +2,9 @@
 ##' @importFrom rlang .data
 plot_pca <- function(pca,
                      comps = 1:2,
+                     size = 3,
                      names = NULL,
-                     name_size = 2.5,
+                     names_ratio = 1.25,
                      color_by = NULL,
                      fix_scales = FALSE,
                      ...) {
@@ -29,7 +30,7 @@ plot_pca <- function(pca,
     df <- cbind(df, color_by)
 
   p <- ggplot2::ggplot(df, ggplot2::aes(.data[[cols[1]]], .data[[cols[2]]], label = names, color = color_by)) +
-    ggplot2::geom_point(...) +
+    ggplot2::geom_point(size = size, ...) +
     ggplot2::xlab(sprintf("PC%d (%.2f%%)", comps[1], explained[comps[1]])) +
     ggplot2::ylab(sprintf("PC%d (%.2f%%)", comps[2], explained[comps[2]])) +
     ggsci::scale_color_lancet()
@@ -41,7 +42,7 @@ plot_pca <- function(pca,
   }
 
   if (!is.null(names))
-    p <- p + ggrepel::geom_text_repel(point.padding = 0.1, size = name_size)
+    p <- p + ggrepel::geom_text_repel(point.padding = 0.1, size = size * names_ratio)
 
   p
 }

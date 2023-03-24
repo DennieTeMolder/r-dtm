@@ -1,7 +1,12 @@
 # return all rows in `y` with a match in `x` in the order of `x`.
 # 'must_match' enforces all rows/values of 'x' to be matched.
 ##' @export
-semi_join_reorder <- function(y, x, by, must_match = TRUE, multiple = "error", ...) {
+semi_join_reorder <- function(y,
+                              x,
+                              by,
+                              must_match = TRUE,
+                              allow_duplicate = FALSE,
+                              ...) {
   stopifnot(is.data.frame(y))
   stopifnot(is.data.frame(x) || is.vector(x))
   stopifnot(is.character(by))
@@ -18,6 +23,10 @@ semi_join_reorder <- function(y, x, by, must_match = TRUE, multiple = "error", .
     x <- x[, by, drop = FALSE]
   }
 
+  if (!allow_duplicate && anyDuplicated(x)) {
+    stop("Duplicate values detected in 'x'!")
+  }
+
   # Rename columns of 'x' to be identical to 'y'
   if (has_names) {
     dict <- names(by)
@@ -26,14 +35,12 @@ semi_join_reorder <- function(y, x, by, must_match = TRUE, multiple = "error", .
     by <- names(by)
   }
 
-  if (must_match) {
-    result <- dplyr::inner_join(x, y, by = by, multiple = multiple, ...)
-    if (nrow(result) != nrow(x))
-      stop("Not all rows/values in 'x' could be matched to 'y'!")
-    return(result)
-  }
+  result <- dplyr::inner_join(x, y, by = by, relationship = "many-to-one", ...)
 
-  dplyr::left_join(x, y, by = by, multiple = multiple, ...)
+  if (must_match && nrow(result) != nrow(x))
+    stop("Not all rows/values in 'x' match to 'y'!")
+
+  result
 }
 
 .lookup_maybe <- function(x, dict) {

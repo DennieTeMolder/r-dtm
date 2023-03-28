@@ -47,14 +47,9 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
     aes <- .modify_aes(aes, text = .make_label(.data$chrom, .data$pos))
   }
 
-  # Compute x limits
-  factor <- 0.04
-  total_size <- sum(sizes$len)
-  xlim <- c(0 + factor * total_size, total_size - factor * total_size)
-
   # Plot
   ggplot2::ggplot(df, aes) +
     ggplot2::scale_x_continuous(breaks = breaks, minor_breaks = NULL) +
-    ggplot2::coord_cartesian(xlim = xlim) +
+    coord_trim_x(sum(sizes$len)) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 315, hjust = 0))
 }

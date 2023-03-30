@@ -26,5 +26,5 @@ get_oldest_parent <- function(df, codes = NULL) {
 ##' @export
 get_oldest_parent_info <- function(df, codes = NULL) {
   parents <- get_oldest_parent(df = df, codes = codes)
-  semi_join_reorder(df, parents, by = "population_code")
+  semi_join_reorder(df, parents, by = "population_code", allow_duplicate = TRUE)
 }

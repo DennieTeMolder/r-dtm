@@ -12,7 +12,7 @@ print_plot <- function(p,
   print_ext <- getOption("dtm.print_plot")
 
   allowed_extentions <- c("png", "jpg", "jpeg", "pdf")
-  if (is.null(print_ext) || !print_ext %in% allowed_extentions)
+  if (isFALSE(print_ext %in% allowed_extentions))
     stop("Value of `options(dtm.print_plot='", print_ext , "')` not allowed! ",
          "Must be NULL or one of: ", .collapse(allowed_extentions))
 

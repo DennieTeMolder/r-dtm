@@ -73,6 +73,11 @@ stopifnotsingle <- function(x, class = NULL) {
   invisible(x)
 }
 
+##' @export
+pseq <- function(from, to) {
+  unlist(purrr::map2(from, to, seq))
+}
+
 .collapse <- function(x, delim = ", ", ...) {
   stringr::str_flatten(x, collapse = delim, ...)
 }

@@ -1,5 +1,5 @@
 ##' @export
-# Print and save plot to FILENAME at the same time unless `option(dtm.nosave = TRUE)`.
+# Print and save plot to FILENAME at the same time unless `option(dtm.save = FALSE)`.
 # If `option(dtm.print_plot != NULL)` the plot is written to `tempdir()` +
 # /session_plots/ instead of printing.
 print_plot <- function(p,
@@ -8,7 +8,6 @@ print_plot <- function(p,
                        filename = NULL,
                        path = NULL,
                        ...) {
-  inhibit_saving <- isTRUE(getOption("dtm.nosave"))
   print_ext <- getOption("dtm.print_plot")
 
   allowed_extentions <- c("png", "jpg", "jpeg", "pdf")
@@ -31,15 +30,15 @@ print_plot <- function(p,
   if (is.null(filename))
     return(invisible(p))
 
-  if (inhibit_saving) {
-    message("Saving to file inhibited.")
-  } else {
+  if (save_p()) {
     if (isTRUE(tools::file_ext(filename) == print_ext)) {
       file.copy(print_file, filename, overwrite = TRUE)
     } else {
       ggplot2::ggsave(filename, plot = p, path = path,
                       width = width, height = height, ...)
     }
+  } else {
+    message("Saving to file inhibited.")
   }
 
   invisible(p)

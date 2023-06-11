@@ -1,5 +1,5 @@
 # This function only provides the canvas, you still need to add a geom_.
-# This function creates/modifies df$pos_adj and aes$x
+# This function creates/modifies df$.pos_adj and aes$x
 ##' @export
 ##' @importFrom rlang .data
 plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
@@ -33,18 +33,20 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
   adjust_pos <- cumsum(sizes$len[size_order])
   adjust_pos <- c(0, utils::head(adjust_pos, n = -1))
   names(adjust_pos) <- sizes$chrom[size_order]
-  df$pos_adj <- df$pos + adjust_pos[df$chrom]
+  df$.pos_adj <- df$pos + adjust_pos[df$chrom]
+
+  # NOTE Labels for optional aes(text = .text) in plotly plots
+  df$.text <- paste0(format(df$pos, big.mark = ",", trim = TRUE), "bp ", df$chrom)
 
   breaks <- adjust_pos
   if (ncol(sizes) == 3)
     names(breaks) <- sizes[[3]][size_order]
 
   # Modify aesthetic mappings
-  aes <- .modify_aes(aes, x = .data$pos_adj)
-  if (is.null(aes$text)) {
-    .make_label <- function(chrom, pos)
-      paste0(format(pos, big.mark = ",", trim = TRUE), "bp ", chrom)
-    aes <- .modify_aes(aes, text = .make_label(.data$chrom, .data$pos))
+  if (is.null(aes)) {
+    aes <- ggplot2::aes(x = .data$.pos_adj)
+  } else {
+    aes$x <- ggplot2::aes(x = .data$.pos_adj)$x
   }
 
   # Plot

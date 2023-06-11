@@ -78,15 +78,6 @@ pseq <- function(from, to) {
   unlist(purrr::map2(from, to, seq))
 }
 
-.collapse <- function(x, delim = ", ", ...) {
-  stringr::str_flatten(x, collapse = delim, ...)
-}
-
-.modify_aes <- function(.aes, ...) {
-  stopifnot(is.list(.aes))
-  stopifnot(inherits(.aes, "uneval"))
-  add_aes <- ggplot2::aes(...)
-  if (is.null(.aes))
-    return(add_aes)
-  utils::modifyList(.aes, add_aes)
+.flatten <- function(...) {
+  stringr::str_flatten_comma(...)
 }

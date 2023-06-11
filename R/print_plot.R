@@ -13,7 +13,7 @@ print_plot <- function(p,
   allowed_extentions <- c("png", "jpg", "jpeg", "pdf")
   if (isFALSE(print_ext %in% allowed_extentions))
     stop("Value of `options(dtm.print_plot='", print_ext , "')` not allowed! ",
-         "Must be NULL or one of: ", .collapse(allowed_extentions))
+         "Must be NULL or one of: ", .flatten(allowed_extentions))
 
   if (!is.null(print_ext)) {
     tmp_file <- tempfile(fileext = paste0(".", print_ext))

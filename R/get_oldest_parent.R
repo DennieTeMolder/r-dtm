@@ -9,7 +9,7 @@ get_oldest_parent <- function(df, codes = NULL) {
 
   idx <- match(codes, df$population_code)
   if (any(is.na(idx)))
-    stop("Cannot find population codes:", .collapse(codes[is.na(idx)]))
+    stop("Cannot find population codes:", .flatten(codes[is.na(idx)]))
 
 
   # Fetch all parental codes, when missing use current code

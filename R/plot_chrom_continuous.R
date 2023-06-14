@@ -35,9 +35,6 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
   names(adjust_pos) <- sizes$chrom[size_order]
   df$.pos_adj <- df$pos + adjust_pos[df$chrom]
 
-  # NOTE Labels for optional aes(text = .text) in plotly plots
-  df$.text <- paste0(format(df$pos, big.mark = ",", trim = TRUE), "bp ", df$chrom)
-
   breaks <- adjust_pos
   if (ncol(sizes) == 3)
     names(breaks) <- sizes[[3]][size_order]

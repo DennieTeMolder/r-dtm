@@ -87,6 +87,12 @@ pseq <- function(from, to) {
   unlist(purrr::map2(from, to, seq))
 }
 
+##' @export
+na_replace <- function(x, replacement) {
+  stopifnot(is.vector(x))
+  ifelse(is.na(x), replacement, x)
+}
+
 .flatten <- function(...) {
   stringr::str_flatten_comma(...)
 }

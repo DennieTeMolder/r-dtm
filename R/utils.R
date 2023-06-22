@@ -68,8 +68,17 @@ interlace <- function(...) {
 stopifnotsingle <- function(x, class = NULL) {
   if (length(x) != 1)
     stop("Argument should have a length of 1!")
-  if (!is.null(class) && !inherits(x, what = class))
-    stop("Argument should be of class '", class, "'!")
+  if (is.null(class))
+    return(invisible(x))
+  pass <- switch(class,
+    null = TRUE,
+    numeric = is.numeric(x),
+    inherits(x, what = class)
+  )
+  if (!pass) {
+    stop("Argument should be one of class '",
+         stringr::str_flatten_comma(class), "'!")
+  }
   invisible(x)
 }
 

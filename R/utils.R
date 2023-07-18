@@ -88,9 +88,17 @@ pseq <- function(from, to) {
 }
 
 ##' @export
+# Alternative to tidyr::replace_na() in which replacement can also be a vector
 na_replace <- function(x, replacement) {
   stopifnot(is.vector(x))
   ifelse(is.na(x), replacement, x)
+}
+
+##' @export
+get_col_rowwise <- function(mat, i) {
+  stopifnot(is.matrix(mat))
+  stopifnot(is.numeric(i), length(i) == nrow(mat))
+  mat[cbind(seq_along(i), i)]
 }
 
 .flatten <- function(...) {

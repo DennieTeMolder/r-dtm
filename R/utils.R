@@ -4,6 +4,23 @@ mem_size <- function(x) {
 }
 
 ##' @export
+# To be used in combination with tryCatch(), e.g.:
+# tryCatch(throw("my_condition"), my_condition = function(cnd) {})
+# OR cnd <- catch("my_condition", expr = throw("my_condition"))
+throw <- function(class = "dtm_throw", ..., message = NULL) {
+  if (is.null(class))
+    class <- "dtm_throw"
+  rlang::abort(message = message, class = class, ...)
+}
+
+##' @export
+# Wraps tryCatch() to return CND if it matches CLASSES instead of acting on it
+# By default it won't catch regular R errors (unlike `catch_cnd`)
+catch <- function(expr, classes = "dtm_throw") {
+  rlang::catch_cnd(expr = expr, classes = classes)
+}
+
+##' @export
 apply_switch <- function(x, ...) {
   lifecycle::deprecate_soft("5-3-2023", "dtm::apply_switch", "dplyr::case_match")
   sapply(x, function(y) switch(y, ..., NA))

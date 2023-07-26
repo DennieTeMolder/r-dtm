@@ -1,6 +1,6 @@
 ##' @export
 ##' @importFrom rlang .data
-plot_filters <- function(df, cutoffs) {
+plot_filters <- function(df, cutoffs, zoom = FALSE) {
   stopifnot(is.data.frame(df))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 
@@ -23,6 +23,17 @@ plot_filters <- function(df, cutoffs) {
       p <- p + ggplot2::geom_vline(xintercept = min, color = "blue")
     if (!is.null(max))
       p <- p + ggplot2::geom_vline(xintercept = max, color = "red")
+
+    # Limit x-axis
+    if (zoom) {
+      x_lim <- rep(NA_real_, 2)
+      ranges <- range(df[[current]], na.rm = TRUE)
+      if (!is.null(min) && min < 0)
+        x_lim[1] <- max(2 * min, ranges[1])
+      if (!is.null(max))
+        x_lim[2] <- min(2 * max, ranges[2])
+      p <- p + xlim(x_lim)
+    }
 
     p
   })

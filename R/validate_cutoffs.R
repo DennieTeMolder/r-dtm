@@ -18,7 +18,7 @@
     min <- cutoffs[[current]]$min
     max <- cutoffs[[current]]$max
     if (isTRUE(min >= max)) {
-      warning("Min >= max for current: ", current)
+      warning("Min >= max for cutoff: ", current)
       all_valid <- FALSE
     }
   }

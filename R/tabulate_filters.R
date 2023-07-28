@@ -1,6 +1,6 @@
 ##' @export
 tabulate_filters <- function(df, cutoffs) {
-    stopifnot(is.data.frame(df))
+  stopifnot(is.data.frame(df))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 
   result <- NULL
@@ -22,7 +22,10 @@ tabulate_filters <- function(df, cutoffs) {
     }
   }
 
-  result <- result[order(result$n_removed, decreasing = TRUE), ]
+  result <- rbind(
+    result[order(result$n_removed, decreasing = TRUE), ],
+    data.frame(filter = "total", n_removed = sum(not_pass_filters(df, cutoffs)))
+  )
   result$frac = round(result$n_removed / nrow(df), digits = 3)
 
   result

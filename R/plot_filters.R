@@ -6,6 +6,10 @@ plot_filters <- function(df, cutoffs, zoom = FALSE) {
 
   # Loop over all cutoffs and visualize
   plots <- lapply(names(cutoffs), function(current) {
+    # Logical values cannot be plotted, use `tabulate_filters()` instead
+    if (is.logical(df[[current]]))
+      return(NULL)
+
     p <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[current]]))
 
     # Check appropriate bin size

@@ -36,7 +36,7 @@ plot_filters <- function(df, cutoffs, zoom = FALSE) {
         x_lim[1] <- max(2 * min, ranges[1])
       if (!is.null(max))
         x_lim[2] <- min(2 * max, ranges[2])
-      p <- p + xlim(x_lim)
+      p <- p + ggplot2::xlim(x_lim)
     }
 
     p

@@ -16,7 +16,7 @@ plotly_subplot <- function(..., title = NULL) {
 ##' @export
 plotly_json <- function(p, file) {
   stopifnot("plotly" %in% class(p))
-  utils::capture.output(plotly::plotly_json(p, jsonedit = F, pretty = F), file = file)
+  utils::capture.output(plotly::plotly_json(p, jsonedit = FALSE, pretty = FALSE), file = file)
 }
 
 ##' @export

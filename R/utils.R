@@ -118,6 +118,20 @@ get_col_rowwise <- function(mat, i) {
   mat[cbind(seq_along(i), i)]
 }
 
+##' @export
+mat2tibble <- function(mat) {
+  if (tibble::is_tibble(mat))
+    return(mat)
+  stopifnot(is.matrix(mat) || is.vector(mat))
+
+  if (is.vector(mat)) {
+    mat <- matrix(mat, nrow = 1, dimnames = list(NULL, names(mat)))
+  }
+
+  mat <- as.data.frame(mat)
+  tibble::as_tibble(mat, rownames = NA)
+}
+
 .flatten <- function(...) {
   stringr::str_flatten_comma(...)
 }

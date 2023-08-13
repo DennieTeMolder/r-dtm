@@ -2,6 +2,7 @@
 
 S3method(summary_coef,lm)
 S3method(summary_coef,mlm)
+export(add_lib_path)
 export(adjust_window)
 export(apply_filters)
 export(apply_switch)

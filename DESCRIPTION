@@ -23,12 +23,12 @@ Imports:
     readxl,
     rlang,
     rrBLUP,
+    slider,
     stringr,
     tibble,
     tidyr,
     tools,
     writexl,
-    yaml,
-    zoo
+    yaml
 Depends:
     tidyverse

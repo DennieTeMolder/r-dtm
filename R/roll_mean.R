@@ -1,10 +1,8 @@
-# Pad out x with the first/last values such that rollmean returns length(x)
+# Beter version of zoo::rollmean
 ##' @export
-roll_mean <- function(x, k) {
-  x <- c(
-    rep(dplyr::first(x), ceiling(k / 2) - 1),
-    x,
-    rep(dplyr::last(x), floor(k / 2))
-  )
-  zoo::rollmean(x, k = k, align = "center")
+roll_mean <- function(x, k, silent = FALSE, ...) {
+  if (!silent && k %% 2 == 0)
+    warning("It is recommended to use on uneven size for 'k'.")
+  k <- k / 2
+  slider::slide_dbl(1:10, mean, ..., .before = ceiling(k) - 1, .after = floor(k))
 }

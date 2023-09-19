@@ -15,9 +15,9 @@ plot_filters <- function(df, cutoffs, zoom = FALSE) {
     # Check appropriate bin size
     n <- num_unique(df[[current]])
     if (n <= 100) {
-      p <- p + ggplot2::geom_histogram(bins = n)
+      p <- p + ggplot2::geom_histogram(bins = n, boundary = 0)
     } else {
-      p <- p + ggplot2::geom_histogram(bins = 100)
+      p <- p + ggplot2::geom_histogram(bins = 100, boundary = 0)
     }
 
     # Add cutoffs

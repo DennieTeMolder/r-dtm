@@ -29,7 +29,7 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL) {
   }
 
   # Compute position adjustment
-  sizes <- dplyr::arrange(sizes, -len)
+  sizes <- dplyr::arrange(sizes, -.data$len)
   adjust_pos <- cumsum(utils::head(sizes$len, n = -1))
   adjust_pos <- c(0, adjust_pos)
   names(adjust_pos) <- sizes$chrom

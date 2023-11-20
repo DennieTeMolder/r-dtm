@@ -1,5 +1,5 @@
 ##' @export
-not_pass_filters <- function(df, cutoffs, filter_na = FALSE) {
+not_pass_filters <- function(df, cutoffs, filter_na = TRUE) {
   stopifnot(is.data.frame(df))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 

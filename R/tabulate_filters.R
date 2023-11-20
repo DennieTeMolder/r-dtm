@@ -1,5 +1,5 @@
 ##' @export
-tabulate_filters <- function(df, cutoffs, filter_na = FALSE) {
+tabulate_filters <- function(df, cutoffs, filter_na = TRUE) {
   stopifnot(is.data.frame(df))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 

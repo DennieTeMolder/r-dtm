@@ -1,5 +1,5 @@
 ##' @export
-not_pass_filters <- function(df, cutoffs) {
+not_pass_filters <- function(df, cutoffs, filter_na = FALSE) {
   stopifnot(is.data.frame(df))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 
@@ -12,6 +12,8 @@ not_pass_filters <- function(df, cutoffs) {
       not_pass[df[[current]] < min] <- TRUE
     if (!is.null(max))
       not_pass[df[[current]] > max] <- TRUE
+    if (filter_na)
+      not_pass[is.na(df[[current]])] <- TRUE
   }
 
   not_pass

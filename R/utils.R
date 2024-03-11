@@ -100,8 +100,8 @@ stopifnotsingle <- function(x, class = NULL) {
 }
 
 ##' @export
-pseq <- function(from, to) {
-  unlist(purrr::map2(from, to, seq))
+pseq <- function(from, to, ...) {
+  as.vector(mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE))
 }
 
 ##' @export

@@ -47,10 +47,8 @@ substitute_dots <- function(...) {
 }
 
 ##' @export
-num_unique <- function(x, na_rm = TRUE) {
-  if (na_rm)
-    x <- x[!is.na(x)]
-  length(unique(x))
+num_unique <- function(..., na_rm = TRUE) {
+  dplyr::n_distinct(..., na.rm = na_rm)
 }
 
 # Version of `seq()` that always includes the number `to`

@@ -1,7 +1,8 @@
 .validate_cutoffs <- function(cutoffs, available_cols) {
-  stopifnot(is.list(cutoffs))
-  stopifnot(length(cutoffs) > 0)
-  stopifnot(is.character(available_cols))
+  if (!is.null(cutoffs)) {
+    stopifnot(is.list(cutoffs), length(cutoffs) > 0)
+    stopifnot(is.character(available_cols))
+  }
 
   all_valid <- TRUE
 

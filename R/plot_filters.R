@@ -1,43 +1,54 @@
 ##' @export
 ##' @importFrom rlang .data
-plot_filters <- function(df, cutoffs, zoom = FALSE) {
+plot_filters <- function(df, cutoffs, bins = 100, min_binwidth = 0.01) {
   stopifnot(is.data.frame(df))
+  stopifnot(rlang::is_scalar_integerish(bins))
+  stopifnot(rlang::is_scalar_double(min_binwidth))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 
   # Loop over all cutoffs and visualize
   plots <- lapply(names(cutoffs), function(current) {
-    # Logical values cannot be plotted, use `tabulate_filters()` instead
-    if (is.logical(df[[current]]))
-      return(NULL)
+    curr_col <- df[[current]]
+    curr_min <- cutoffs[[current]]$min
+    curr_max <- cutoffs[[current]]$max
 
-    p <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[current]]))
-
-    # Check appropriate bin size
-    n <- num_unique(df[[current]])
-    if (n <= 100) {
-      p <- p + ggplot2::geom_histogram(bins = n, boundary = 0)
+    # Remove NAs, track how many were removed
+    if (anyNA(curr_col)) {
+      na <- is.na(curr_col)
+      curr_col <- curr_col[!na]
+      na <- sum(na)
     } else {
-      p <- p + ggplot2::geom_histogram(bins = 100, boundary = 0)
+      na <- 0L
     }
+
+    if (is.logical(curr_col))
+      curr_col <- as.integer(curr_col)
+
+    # Limits of canvas
+    x_lim <- range(0L, curr_col, curr_min, curr_max)
+
+    # TODO zoom based on quantile distribution
+
+    # Compute breaks, make last bin right inclusive
+    binwidth <- max(min_binwidth, diff(x_lim) / bins)
+    breaks <- seq_to_last(x_lim[1L], x_lim[2L], by = binwidth)
+    breaks[length(breaks)] <- breaks[length(breaks)] + binwidth
+
+    # Covert back  to df
+    curr_col <- data.frame(x = curr_col)
+    colnames(curr_col) <- current
+
+    # Base canvas
+    na_action <- if ("keep_na" %in% names(cutoffs[[current]])) "kept" else "removed"
+    p <- ggplot2::ggplot(curr_col, ggplot2::aes(x = .data[[current]])) +
+      ggplot2::ggtitle(paste(na, "NAs", na_action)) +
+      ggplot2::geom_histogram(breaks = breaks)
 
     # Add cutoffs
-    min <- cutoffs[[current]]$min
-    max <- cutoffs[[current]]$max
-    if (!is.null(min))
-      p <- p + ggplot2::geom_vline(xintercept = min, color = "blue")
-    if (!is.null(max))
-      p <- p + ggplot2::geom_vline(xintercept = max, color = "red")
-
-    # Limit x-axis
-    if (zoom) {
-      x_lim <- rep(NA_real_, 2)
-      ranges <- range(df[[current]], na.rm = TRUE)
-      if (!is.null(min) && min < 0)
-        x_lim[1] <- max(2 * min, ranges[1])
-      if (!is.null(max))
-        x_lim[2] <- min(2 * max, ranges[2])
-      p <- p + ggplot2::xlim(x_lim)
-    }
+    if (!is.null(curr_min))
+      p <- p + ggplot2::geom_vline(xintercept = curr_min, color = "blue")
+    if (!is.null(curr_max))
+      p <- p + ggplot2::geom_vline(xintercept = curr_max, color = "red")
 
     p
   })

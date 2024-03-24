@@ -1,5 +1,5 @@
 ##' @export
-tabulate_filters <- function(df, cutoffs, filter_na = TRUE) {
+tabulate_filters <- function(df, cutoffs) {
   stopifnot(is.data.frame(df))
   .validate_cutoffs(cutoffs, available_cols = colnames(df))
 
@@ -23,23 +23,19 @@ tabulate_filters <- function(df, cutoffs, filter_na = TRUE) {
     )
   })
 
-  if (filter_na) {
-    nas <- lapply(names(cutoffs), function(current) {
-      is_na <- is.na(df[[current]])
-      if (!any(is_na))
-        return(NULL)
-      data.frame(
-        filter = paste(current, "= NA"),
-        n_removed = sum(is_na)
-      )
-    })
-  } else {
-    nas <- NULL
-  }
+  nas <- lapply(names(cutoffs), function(current) {
+    na_rm <- cutoffs[[current]]$na.rm
+    if (!isTRUE(na_rm) || !anyNA(df[[current]]))
+      return(NULL)
+    data.frame(
+      filter = paste(current, "= NA"),
+      n_removed = sum(is.na(df[[current]]))
+    )
+  })
 
   total <- list(data.frame(
     filter = "total",
-    n_removed = sum(not_pass_filters(df, cutoffs = cutoffs, filter_na = filter_na))
+    n_removed = sum(not_pass_filters(df, cutoffs = cutoffs))
   ))
 
   result <- do.call(rbind, c(mins, maxs, nas, total))

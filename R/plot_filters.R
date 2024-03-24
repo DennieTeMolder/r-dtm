@@ -11,6 +11,7 @@ plot_filters <- function(df, cutoffs, bins = 100, zoom = TRUE) {
     curr_data <- df[[current]]
     curr_min <- cutoffs[[current]]$min
     curr_max <- cutoffs[[current]]$max
+    na_rm <- cutoffs[[current]]$na.rm
 
     # Remove NAs, track how many were removed
     if (anyNA(curr_data)) {
@@ -63,7 +64,7 @@ plot_filters <- function(df, cutoffs, bins = 100, zoom = TRUE) {
     colnames(curr_df) <- current
 
     # Base plot
-    na_action <- if ("keep_na" %in% names(cutoffs[[current]])) "kept" else "removed"
+    na_action <- if (isTRUE(na_rm)) "removed" else "kept"
     subtitle <- if (zoom) sprintf(
       "Percentage of total data omitted: %.1f%% left; %.1f%% right",
       ceiling(mean(curr_data < min(breaks)) * 1000) / 10,

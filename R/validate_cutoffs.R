@@ -12,8 +12,8 @@
       all_valid <- FALSE
     }
 
-    if (!any(c("min", "max") %in% names(cutoffs[[current]]))) {
-      warning("No min/max found for cutoff: ", current, call. = FALSE)
+    if (!any(c("min", "max", "na.rm") %in% names(cutoffs[[current]]))) {
+      warning("No actions recognised for cutoff: ", current, call. = FALSE)
       all_valid <- FALSE
       next()
     }

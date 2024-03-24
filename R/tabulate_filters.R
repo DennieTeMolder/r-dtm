@@ -25,7 +25,7 @@ tabulate_filters <- function(df, cutoffs) {
 
   nas <- lapply(names(cutoffs), function(current) {
     na_rm <- cutoffs[[current]]$na.rm
-    if (!isTRUE(na_rm) || !anyNA(df[[current]]))
+    if (!isTRUE(na_rm))
       return(NULL)
     data.frame(
       filter = paste(current, "= NA"),

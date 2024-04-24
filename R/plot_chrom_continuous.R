@@ -24,7 +24,7 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL, text_aes = TRUE)
   if (is.null(sizes)) {
     # Scaffolds are often larger, but this is a good approximation
     sizes <- dplyr::summarise(dplyr::group_by(df, .data$chrom), len = max(.data$pos))
-    sizes <- arrange(sizes, -len)
+    sizes <- dplyr::arrange(sizes, -.data$len)
   } else {
     colnames(sizes)[1:2] <- c("chrom", "len")
     sizes <- dplyr::filter(dplyr::ungroup(sizes), .data$chrom %in% used_chroms)

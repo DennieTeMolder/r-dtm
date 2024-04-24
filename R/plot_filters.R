@@ -35,9 +35,9 @@ plot_filters <- function(df, cutoffs, bins = 100, zoom = TRUE) {
 
       # Compute the size of a single zoom distance unit
       zoom_dist <- if (is.null(curr_min)) {
-        abs(curr_max - median(curr_data))
+        abs(curr_max - stats::median(curr_data))
       } else if (is.null(curr_max)) {
-        abs(median(curr_data) - curr_min)
+        abs(stats::median(curr_data) - curr_min)
       } else {
         (curr_max - curr_min) / 2
       }

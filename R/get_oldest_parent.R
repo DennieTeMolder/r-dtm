@@ -3,20 +3,28 @@
 get_oldest_parent <- function(df, codes = NULL) {
   stopifnot(is.data.frame(df))
   stopifnot(c("population_code", "parental_population_code") %in% colnames(df))
+  if (is.null(codes)) {
+    stopifnot(!anyNA(df$population_code), nchar(df$population_code) > 0L, df$population_code != "NA")
+  } else {
+    stopifnot(!anyNA(codes), nchar(codes) > 0L, codes != "NA")
+  }
 
-  if (is.null(codes))
+  if (is.null(codes)) {
     codes <- df$population_code
+    parents <- df$parental_population_code
+  } else {
+    idx <- match(codes, df$population_code)
+    if (any(is.na(idx)))
+      stop("Values not found in the 'population_code' column: ", .flatten(codes[is.na(idx)]))
+    parents <- df$parental_population_code[idx]
+  }
 
-  idx <- match(codes, df$population_code)
-  if (any(is.na(idx)))
-    stop("Cannot find population codes:", .flatten(codes[is.na(idx)]))
+  # If there is no parent we keep the current code as oldest
+  is_na <- is.na(parents)
+  if (any(is_na))
+    parents[is_na] <- codes[is_na]
 
-
-  # Fetch all parental codes, when missing use current code
-  parents <- df$parental_population_code[idx]
-  parents <- ifelse(is.na(parents), codes, parents)
-
-  # Recurse until oldest parent is found
+  # Recurse until oldest parent is found for each entry
   if (any(parents != codes))
     parents <- get_oldest_parent(df = df, codes = parents)
 

@@ -4,13 +4,13 @@ mem_size <- function(x) {
 }
 
 ##' @export
-# To be used in combination with tryCatch(), e.g.:
-# tryCatch(throw("my_condition"), my_condition = function(cnd) {})
+# To be used in combination with tryCatch() or catch(), e.g.:
+# tryCatch(throw("my_condition"), my_condition = function(cnd) TRUE)
+# OR cnd <- catch({print(1); throw(x = 3); print(2)})
 # OR cnd <- catch("my_condition", expr = throw("my_condition"))
-throw <- function(class = "dtm_throw", ..., message = NULL) {
-  if (is.null(class))
-    class <- "dtm_throw"
-  rlang::abort(message = message, class = class, ...)
+throw <- function(class = "dtm_throw", ...) {
+  msg <- paste("condition with", ...length(), "included object(s)")
+  rlang::signal(msg, class = class, ...)
 }
 
 ##' @export
@@ -22,27 +22,29 @@ catch <- function(expr, classes = "dtm_throw") {
 
 ##' @export
 apply_switch <- function(x, ...) {
-  lifecycle::deprecate_soft("5-3-2023", "dtm::apply_switch", "dplyr::case_match")
+  lifecycle::deprecate_soft("5-3-2023", "apply_switch()", "dplyr::case_match()")
   sapply(x, function(y) switch(y, ..., NA))
 }
 
 ##' @export
-get_col <- function(n, mat) {
+get_col <- function(idx, mat) {
   stopifnot(is.matrix(mat))
-  ceiling(n / nrow(mat))
+  ceiling(idx / nrow(mat))
 }
 
 ##' @export
-get_row <- function(n, mat) {
+get_row <- function(idx, mat) {
   stopifnot(is.matrix(mat))
-  i <- n %% nrow(mat)
-  i[i == 0] <- nrow(mat)
+  i <- idx %% nrow(mat)
+  is_zero <- i == 0L
+  if (any(is_zero))
+    i[is_zero] <- nrow(mat)
   i
 }
 
 ##' @export
 substitute_dots <- function(...) {
-  dots <- substitute(list(...))[-1]
+  dots <- substitute(list(...))[-1L]
   sapply(dots, deparse)
 }
 
@@ -62,19 +64,19 @@ seq_to_last <- function(from, to, ...) {
 
 ##' @export
 phred2prob <- function(x) {
-  10^(x/-10)
+  10^(x / -10)
 }
 
 ##' @export
 get_sign <- function(x) {
-  stopifnot(is.numeric(x))
-  ifelse(x < 0, -1, 1)
+  lifecycle::deprecate_soft("1-5-2024", "get_sign()", "base::sign()")
+  sign(x)
 }
 
 ##' @export
 # Intrerlace multiple vectors
 interlace <- function(...) {
-  if (length(list(...)) > 1)
+  if (...length() > 1L)
     return(c(rbind(...)))
   c(t(...))
 }
@@ -117,21 +119,28 @@ stopifnotsingle <- function(x, class = NULL, allow_null = FALSE, na_detect = FAL
 
 ##' @export
 pseq <- function(from, to, ...) {
-  as.vector(mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE))
+  c(mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE))
 }
 
 ##' @export
 # Alternative to tidyr::replace_na() in which replacement can also be a vector
 na_replace <- function(x, replacement) {
-  stopifnot(is.vector(x))
-  ifelse(is.na(x), replacement, x)
+  stopifnot(length(replacement) == 1L || length(replacement) == length(x))
+  is_na <- is.na(x)
+  if (any(is_na)) {
+    if (length(replacement) == 1L) {
+      x[is_na] <- replacement
+    } else {
+      x[is_na] <- replacement[is_na]
+    }
+  }
+  x
 }
 
 ##' @export
 get_col_rowwise <- function(mat, i) {
-  stopifnot(is.matrix(mat))
-  stopifnot(is.numeric(i), length(i) == nrow(mat))
-  mat[cbind(seq_along(i), i)]
+  lifecycle::deprecate_soft("1-5-2024", "get_col_rowwise()", "matrixStats::rowCollapse()")
+  matrixStats::rowCollapse(x = mat, idxs = i)
 }
 
 ##' @export
@@ -141,7 +150,7 @@ mat2tibble <- function(mat) {
   stopifnot(is.matrix(mat) || is.vector(mat))
 
   if (is.vector(mat)) {
-    mat <- matrix(mat, nrow = 1, dimnames = list(NULL, names(mat)))
+    mat <- matrix(mat, nrow = 1L, dimnames = list(NULL, names(mat)))
   }
 
   mat <- as.data.frame(mat)

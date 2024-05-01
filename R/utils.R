@@ -77,7 +77,7 @@ get_sign <- function(x) {
 # Intrerlace multiple vectors
 interlace <- function(...) {
   if (...length() > 1L)
-    return(c(rbind(...)))
+    return(as.vector(rbind(...)))
   c(t(...))
 }
 
@@ -119,7 +119,8 @@ stopifnotsingle <- function(x, class = NULL, allow_null = FALSE, na_detect = FAL
 
 ##' @export
 pseq <- function(from, to, ...) {
-  c(mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE))
+  res <- mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE)
+  do.call(c, res)
 }
 
 ##' @export

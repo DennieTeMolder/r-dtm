@@ -1,7 +1,7 @@
 ##' @export
 adjust_window <- function(window, span, adjust = "closest") {
-  stopifnotsingle(window, class = "numeric")
-  stopifnotsingle(span, class = "numeric")
+  assert_length(window, 1, what = is.numeric)
+  assert_length(span, 1, what = is.numeric)
   stopifnot(span > 0)
 
   if (span <= window)

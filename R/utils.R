@@ -20,6 +20,12 @@ num_unique <- function(..., na_rm = TRUE) {
   dplyr::n_distinct(..., na.rm = na_rm)
 }
 
+##' @export
+pseq <- function(from, to, ...) {
+  res <- mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE)
+  do.call(c, res)
+}
+
 # Version of `seq()` that always includes the number `to`
 ##' @export
 seq_to_last <- function(from, to, ...) {

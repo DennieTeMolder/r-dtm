@@ -8,7 +8,7 @@ melt_matrix <- function(mat, lower_tri_only = FALSE, use_names = TRUE) {
   if (is.null(cnames)) cnames <- seq_len(ncol(mat))
   cnames <- rep(cnames, each = nrow(mat))
 
-  result <- tibble(row = rnames, col = cnames, value = as.vector(mat))
+  result <- tibble::tibble(row = rnames, col = cnames, value = as.vector(mat))
   if (!lower_tri_only)
     return(result)
   result[as.vector(lower.tri(mat)), ]

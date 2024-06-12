@@ -4,9 +4,8 @@ mat2tibble <- function(mat) {
     return(mat)
   stopifnot(is.matrix(mat) || is.vector(mat))
 
-  if (is.vector(mat)) {
-    mat <- matrix(mat, nrow = 1L, dimnames = list(NULL, names(mat)))
-  }
+  if (is.vector(mat))
+    mat <- as.list(mat)
 
   mat <- as.data.frame(mat)
   tibble::as_tibble(mat, rownames = NA)

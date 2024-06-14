@@ -1,5 +1,9 @@
 ### Exported ------
 ##' @export
+# Function not exported from tibble
+vectbl_restore <- getFromNamespace("vectbl_restore", "tibble")
+
+##' @export
 get_col <- function(idx, mat) {
   stopifnot(is.matrix(mat))
   ceiling(idx / nrow(mat))

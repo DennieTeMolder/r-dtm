@@ -16,5 +16,5 @@ split_index <- function(index, bin_size = 1e5, adjust = "closest") {
   res <- do.call(dplyr::bind_rows, res)
 
   # Restore attributes
-  tibble:::vectbl_restore(res, index)
+  vectbl_restore(res, index)
 }

@@ -1,10 +1,11 @@
 ##' @export
 assert_length <- function(x, len, what = NULL, na_detect = FALSE, allow_null = FALSE) {
   len <- as.integer(len)
+  stopifnot(length(len) == 1L)
 
   # Check NULL
   if (is.null(x)) {
-    if (allow_null) {
+    if (isTRUE(allow_null)) {
       return(invisible(x))
     } else {
       stop("`", substitute(x), "` cannot be NULL!", call. = FALSE)
@@ -15,7 +16,7 @@ assert_length <- function(x, len, what = NULL, na_detect = FALSE, allow_null = F
   if (is.null(what)) {
     # Do nothing
   } else if (is.function(what)) {
-    if (!what(x))
+    if (!isTRUE(what(x)))
       stop("`", substitute(what), "(", substitute(x), ")` is not TRUE!", call. = FALSE)
   } else if (!inherits(x, what = what)) {
     stop("`", substitute(x), "` should be one of class: ", .flatten(class), "!", call. = FALSE)
@@ -26,12 +27,12 @@ assert_length <- function(x, len, what = NULL, na_detect = FALSE, allow_null = F
     stop("`", substitute(x), "` should have a length of ", len, "!", call. = FALSE)
 
   # Check NA/forbidden values
-  if (identical(na_detect, FALSE)) {
+  if (is.null(na_detect) || identical(na_detect, FALSE)) {
     # Do nothing
   } else if (identical(na_detect, TRUE)) {
     if (anyNA(x))
       stop("`", substitute(x), "` contains NA values!", call. = FALSE)
-  } else if (!is.null(na_detect)) {
+  } else {
     forbidden <- na_detect %in% x
     if (any(forbidden)) {
       stop("`", substitute(x), "` contains the following forbidden value(s): ",

@@ -29,10 +29,11 @@ semi_join_reorder <- function(y,
 
   # Rename columns of 'x' to be identical to 'y'
   if (has_names) {
-    dict <- names(by)
-    names(dict) <- by
-    x <- dplyr::rename_with(x, .lookup_maybe, dict = dict)
-    by <- names(by)
+    rename_x <- names(by)
+    rename_x[rename_x == ""] <- by[rename_x == ""]
+    names(rename_x) <- by
+    colnames(x) <- rename_x[colnames(x)]
+    by <- unname(rename_x)
   }
 
   result <- dplyr::inner_join(x, y, by = by, relationship = "many-to-one", ...)
@@ -41,15 +42,4 @@ semi_join_reorder <- function(y,
     stop("Not all rows/values in 'x' match to 'y'!")
 
   result
-}
-
-.lookup_maybe <- function(x, dict) {
-  if(!is.vector(dict) || is.list(dict))
-    stop("`dict` should be a named vector!")
-  if (is.null(names(dict)))
-    stop("`dict` does not have any names!")
-  new <- dict[x]
-  new <- ifelse(is.na(new), x, new)
-  names(new) <- NULL
-  new
 }

@@ -26,7 +26,7 @@ num_unique <- function(..., na_rm = TRUE) {
 
 ##' @export
 pseq <- function(from, to, ...) {
-  res <- mapply(seq.int, from = from, to = to, MoreArgs = list(...), USE.NAMES = FALSE)
+  res <- mapply(seq.int, from = from, to = to, MoreArgs = list(...), SIMPLIFY = FALSE, USE.NAMES = FALSE)
   do.call(c, res)
 }
 

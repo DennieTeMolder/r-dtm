@@ -1,5 +1,7 @@
 ##' @export
-melt_matrix <- function(mat, lower_tri_only = FALSE, use_names = TRUE) {
+melt_matrix <- function(mat, upper = TRUE, diag = upper, use_names = TRUE) {
+  mat <- as.matrix(mat)
+
   rnames <- if (use_names) rownames(mat)
   if (is.null(rnames)) rnames <- seq_len(nrow(mat))
   rnames <- rep(rnames, ncol(mat))
@@ -9,7 +11,7 @@ melt_matrix <- function(mat, lower_tri_only = FALSE, use_names = TRUE) {
   cnames <- rep(cnames, each = nrow(mat))
 
   result <- tibble::tibble(row = rnames, col = cnames, value = as.vector(mat))
-  if (!lower_tri_only)
+  if (upper)
     return(result)
-  result[as.vector(lower.tri(mat)), ]
+  result[as.vector(lower.tri(mat, diag = diag)), ]
 }

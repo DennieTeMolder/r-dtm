@@ -53,11 +53,6 @@ phred2prob <- function(x) {
 }
 
 ##' @export
-mem_size <- function(x) {
-  pryr::object_size(x)
-}
-
-##' @export
 substitute_dots <- function(...) {
   dots <- substitute(list(...))[-1L]
   sapply(dots, deparse)

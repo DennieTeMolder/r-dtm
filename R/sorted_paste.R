@@ -1,3 +1,4 @@
+# Paste the values of ... in a sorted order using SEP.
 ##' @export
 sorted_paste <- function(..., sep = " ") {
   dots <- lapply(list(...), as.character)

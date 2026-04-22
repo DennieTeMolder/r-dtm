@@ -1,7 +1,8 @@
+# Adjust SPAN such that it divides WINDOW without any remainder
 ##' @export
 adjust_window <- function(window, span, adjust = "closest") {
-  assert_length(window, 1, what = is.numeric)
-  assert_length(span, 1, what = is.numeric)
+  assert_length(window, 1L, what = is.numeric)
+  assert_length(span, 1L, what = is.numeric)
   stopifnot(span > 0)
 
   if (span <= window)

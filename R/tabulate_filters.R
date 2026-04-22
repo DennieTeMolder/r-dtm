@@ -1,3 +1,4 @@
+# Tabulate the result of apply_filters(df, cutoffs)
 ##' @export
 tabulate_filters <- function(df, cutoffs) {
   stopifnot(is.data.frame(df))

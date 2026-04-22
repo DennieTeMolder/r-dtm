@@ -1,4 +1,4 @@
-# Generate an empty df with columns provided in ... + colnames
+# Generate an empty dataframe with columns provided in ... + colnames
 ##' @export
 empty_df <- function(..., colnames = NULL, nrow = 1, default = NA_real_) {
   if (!is.null(colnames))

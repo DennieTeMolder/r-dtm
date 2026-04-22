@@ -1,17 +1,20 @@
 ### Binning/windows ------
+# Smooth values of X by averaging across WINDOW_SIZE based on physical position POS
 ##' @export
-smooth_physical <- function(x, pos, window_size = 1e5) {
+smooth_physical <- function(x, pos, window_size = 1e5, na.rm = FALSE) {
   stopifnot(is.numeric(x))
   stopifnot(!is.na(x))
   stopifnot(is.numeric(pos))
   stopifnot(length(x) == length(pos))
 
-  sapply(pos, function(point) {
+  purrr::map_dbl(pos, function(point) {
     in_window <- which(pos > point - window_size & pos < point + window_size)
-    mean(x[in_window])
+    mean(x[in_window], na.rm = na.rm)
   })
 }
 
+# Create sliding windows from START to END of SIZE. JUMP controls the distance
+# between windows and defaults to SIZE. CONTIG is not used but added to the output
 ##' @export
 sliding_window <- function(end,
                            start = 1,

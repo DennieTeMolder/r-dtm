@@ -1,3 +1,5 @@
+# Plot COMPS of PCA using ggplot2 and annotate observations with NAMES and color
+# them according to COLOR_BY.
 ##' @export
 ##' @importFrom rlang .data
 plot_pca <- function(pca,
@@ -47,7 +49,7 @@ plot_pca <- function(pca,
   p
 }
 
-# Percentage of explained variation
+# Percentage of explained variation per comp of PCA
 ##' @export
 pca_explained <- function(pca) {
   stopifnot(class(pca) == "prcomp")

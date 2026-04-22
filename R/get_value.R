@@ -1,4 +1,6 @@
-# Example: x <- 2:4; filter(x %in% 1:3)
+# Parse expression X and extract the values using the result from the object in
+# left hand side of expression X
+# Example: x <- 2:4; get_value(x %in% 1:3)
 ##' @export
 get_value <- function(x) {
   stopifnot(is.logical(x) || is.numeric(x))

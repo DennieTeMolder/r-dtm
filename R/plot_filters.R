@@ -1,3 +1,6 @@
+# Plot CUTOFFS over the values of DF. BINS is the number of bins in the
+# histogram. ZOOM controls if extreme data should be removed. See
+# not_pass_filters()
 ##' @export
 ##' @importFrom rlang .data
 plot_filters <- function(df, cutoffs, bins = 100, zoom = TRUE) {

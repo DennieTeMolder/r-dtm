@@ -1,4 +1,6 @@
-# Specifically designed for WN metadata xlsx files
+# Return the oldest parent for each value of DF$population_code using
+# DF$parental_population_code. CODES is for internal use. Specifically designed
+# for WN metadata xlsx files.
 ##' @export
 get_oldest_parent <- function(df, codes = NULL) {
   stopifnot(is.data.frame(df))

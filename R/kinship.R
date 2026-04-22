@@ -1,3 +1,4 @@
+# Compute the kinship matrix of MAT, see rrBLUP::A.mat()
 ##' @export
 kinship <- function(mat) {
    names <- rownames(mat)

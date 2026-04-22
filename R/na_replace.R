@@ -1,5 +1,5 @@
+# Alternative to tidyr::replace_na() in which REPLACEMENT can also be a vector
 ##' @export
-# Alternative to tidyr::replace_na() in which replacement can also be a vector
 na_replace <- function(x, replacement) {
   stopifnot(length(replacement) == 1L || length(replacement) == length(x))
   is_na <- is.na(x)

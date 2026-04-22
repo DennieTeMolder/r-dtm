@@ -2,6 +2,8 @@
 # Example: GetMethod(print, vcf)
 ##' @export
 get_method <- function(generic, ...) {
+  lifecycle::deprecate_soft("22-4-2026", "get_method", "sloop::s3_dispatch()")
+
   ch <- deparse(substitute(generic))
 
   f <- X <- function(x, ...) UseMethod("X")

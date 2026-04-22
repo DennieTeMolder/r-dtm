@@ -11,6 +11,7 @@ with_temp_lib <- function(expr, lib = tempdir()) {
   invisible(eval(expr))
 }
 
+# APPEND or replace .libPaths() with LIB
 ##' @export
 add_lib_path <- function(lib, append = TRUE) {
   stopifnot(file.exists(lib))

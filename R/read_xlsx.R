@@ -1,3 +1,4 @@
+# Read all sheets of Excel FILE as a list of dataframes, see readxl::read_excel().
 ##' @export
 read_xlsx <- function(file, sheet = NULL, na = c("", "NA"), ...) {
   if (is.null(sheet)) {

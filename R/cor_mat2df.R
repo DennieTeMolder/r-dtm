@@ -1,5 +1,7 @@
 ##' @export
 cor_mat2df <- function(cor_mat, use_names = FALSE) {
+  lifecycle::deprecate_soft("22-4-2026", "cor_mat2df", "melt_matrix(upper = FALSE)")
+
   stopifnot(is.matrix(cor_mat), nrow(cor_mat) == ncol(cor_mat))
   arr_ind <- which(lower.tri(cor_mat), arr.ind = TRUE)
   df <- tibble::tibble(row = arr_ind[, 1], col = arr_ind[, 2], value = cor_mat[arr_ind])

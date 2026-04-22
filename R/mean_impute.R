@@ -1,3 +1,4 @@
+# Mean impute NA/NaN values of X
 ##' @export
 mean_impute <- function(x) {
   is_na <- is.na(x)

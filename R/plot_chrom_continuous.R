@@ -55,7 +55,6 @@ plot_chrom_continuous <- function(df, aes = NULL, sizes = NULL, text_aes = TRUE)
 
   # Plot
   ggplot2::ggplot(df, aes) +
-    ggplot2::scale_x_continuous(breaks = breaks, minor_breaks = NULL) +
-    coord_trim_x(max(breaks)) +
+    ggplot2::scale_x_continuous(breaks = breaks, minor_breaks = NULL, expand = ggplot2::expansion()) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1))
 }

@@ -1,5 +1,5 @@
-##' @export
 # Simple progress message that tracks running time and status, see also cli::cli_progress_done()
+##' @export
 progress_msg <- function(msg = NULL, unit = "units", only = TRUE, .envir = parent.frame(), ...) {
   if (!is.null(msg))
     stopifnot(is.character(msg))
@@ -41,8 +41,8 @@ progress_msg <- function(msg = NULL, unit = "units", only = TRUE, .envir = paren
   invisible(id)
 }
 
+# Update progress_msg() with AMOUNT
 ##' @export
-# Convenience wrapper
 progress_inc <- function(amount, force = TRUE, .envir = parent.frame()) {
   cli::cli_progress_update(inc = amount, force = force, .envir = .envir)
 }

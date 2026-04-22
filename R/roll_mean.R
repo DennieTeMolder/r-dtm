@@ -1,4 +1,4 @@
-# Beter version of zoo::rollmean
+# Compute the rolling mean of X with window size K, see slider::slide_dbl()
 ##' @export
 roll_mean <- function(x, k, silent = FALSE, ...) {
   if (!silent && k %% 2 == 0)

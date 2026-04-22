@@ -1,3 +1,4 @@
+# Read .gtf/.gff3 FILE and return a dataframe
 # See: https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md
 ##' @export
 read_gff3 <- function(file, check = TRUE, ...) {

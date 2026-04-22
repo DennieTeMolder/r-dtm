@@ -3,12 +3,14 @@
 # Function not exported from tibble
 vectbl_restore <- getFromNamespace("vectbl_restore", "tibble")
 
+# Get the col number of index IDX in MAT
 ##' @export
 get_col <- function(idx, mat) {
   stopifnot(is.matrix(mat))
   ceiling(idx / nrow(mat))
 }
 
+# Get the row number of index IDX in MAT
 ##' @export
 get_row <- function(idx, mat) {
   stopifnot(is.matrix(mat))
@@ -21,9 +23,11 @@ get_row <- function(idx, mat) {
 
 ##' @export
 num_unique <- function(..., na_rm = TRUE) {
+  lifecycle::deprecate_soft("22-4-2026", "num_unique", "dplyr::n_distinct()")
   dplyr::n_distinct(..., na.rm = na_rm)
 }
 
+# Version of seq() where FROM and TO can each be a vector
 ##' @export
 pseq <- function(from, to, ...) {
   res <- mapply(seq.int, from = from, to = to, MoreArgs = list(...), SIMPLIFY = FALSE, USE.NAMES = FALSE)
@@ -40,18 +44,20 @@ seq_to_last <- function(from, to, ...) {
 }
 
 ##' @export
-# Intrerlace multiple vectors
+# Interlace multiple vectors
 interlace <- function(...) {
   if (...length() > 1L)
     return(as.vector(rbind(...)))
   c(t(...))
 }
 
+# Convert Phred-scores to probability values
 ##' @export
 phred2prob <- function(x) {
   10^(x / -10)
 }
 
+# Deparse the ... expression
 ##' @export
 substitute_dots <- function(...) {
   dots <- substitute(list(...))[-1L]

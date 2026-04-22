@@ -1,4 +1,4 @@
-# Repeat a vector rowwise to create a matrix, contrary to default behaviour
+# Repeat a vector X rowwise to create a matrix with NROW.
 ##' @export
 rep_rowwise <- function(x, nrow = NULL, rownames = NULL) {
   stopifnot(is.vector(x) || is.matrix(x) && nrow(x) == 1L)

@@ -1,3 +1,5 @@
+# Melt matrix MAT into a long-format dataframe with row/column indices or names
+# based on USE_NAMES.
 ##' @export
 melt_matrix <- function(mat, upper = TRUE, diag = upper, use_names = TRUE) {
   mat <- as.matrix(mat)

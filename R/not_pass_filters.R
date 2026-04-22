@@ -1,3 +1,6 @@
+# Returns a boolean vector that is TRUE for each row of dataframe DF that
+# doesn't mean any of the criteria in CUTOFFS. CUTOFFS should be a list with the
+# format CUTOFFS[df_column_name][min|max|na.rm].
 ##' @export
 not_pass_filters <- function(df, cutoffs) {
   stopifnot(is.data.frame(df))

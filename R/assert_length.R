@@ -1,3 +1,5 @@
+# Assert X has length LEN and check matches WHAT. WHAT can be either a type
+# string or a function that returns a TRUE/FALSE.
 ##' @export
 assert_length <- function(x, len, what = NULL, na_detect = FALSE, allow_null = FALSE) {
   len <- as.integer(len)

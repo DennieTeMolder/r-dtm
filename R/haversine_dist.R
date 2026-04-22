@@ -1,4 +1,6 @@
-#' @export
+# Compute the distance matrix between all pair-wise LON and LAT values.
+# Uses NAME to name the rows/columns of the result.
+##' @export
 haversine_dist <- function(lon, lat, name = NULL) {
   stopifnot(is.double(lon), is.double(lat), length(lon) == length(lat))
   if (!is.null(name))

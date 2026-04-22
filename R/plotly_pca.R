@@ -1,3 +1,5 @@
+# Plot COMPS of PCA using Plotly and annotate points with metatdata from META.
+# The order of the rows of META should match to order of PCA$x.
 ##' @export
 plotly_pca <- function(pca,
                        comps = 1:2,

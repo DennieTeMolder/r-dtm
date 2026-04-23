@@ -1,13 +1,13 @@
 # Merge overlapping regions in DF into a single entry
 ##' @export
-merge_overlaps <- function(df) {
+merge_annotations <- function(df) {
   stopifnot(is.data.frame(df), c("chrom", "start", "end") %in% colnames(df))
 
   if (nrow(df) < 1L)
     return(NULL)
 
   df |>
-    count_overlaps() |>
+    count_annotations() |>
     dplyr::mutate(
       with_prev = .data$start == c(0L, .data$end[-dplyr::n()]),
       group = cumsum(!.data$with_prev),

@@ -1,6 +1,6 @@
-# Return a dataframe with the number of regions per position (value of 2+ indices an overlap)
+# Return a dataframe with the number of annotations per position
 ##' @export
-count_overlaps <- function(df) {
+count_annotations <- function(df) {
   stopifnot(is.data.frame(df), c("chrom", "start", "end") %in% colnames(df))
 
   df |>

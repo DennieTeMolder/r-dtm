@@ -1,6 +1,7 @@
 # Compute the rolling mean of X with window size K, see slider::slide_dbl()
 ##' @export
 roll_mean <- function(x, k, silent = FALSE, ...) {
+  rlang::check_installed("slider")
   if (!silent && k %% 2 == 0)
     warning("It is recommended to use an uneven size for 'k'.")
   k <- k / 2

@@ -1,6 +1,7 @@
 # Arrange multiple Plotly sub-plots into a larger figure.
 ##' @export
 plotly_subplot <- function(..., title = NULL) {
+  rlang::check_installed("plotly")
   p <- plotly::subplot(
     ...,
     titleX = TRUE,
@@ -17,12 +18,14 @@ plotly_subplot <- function(..., title = NULL) {
 # Export Plotly plot P as .json to FILE
 ##' @export
 plotly_json <- function(p, file) {
-  stopifnot("plotly" %in% class(p))
+  rlang::check_installed("plotly")
+  stopifnot(inherits(p, "plotly"))
   utils::capture.output(plotly::plotly_json(p, jsonedit = FALSE, pretty = FALSE), file = file)
 }
 
 # Export Plotly plot P as .html to FILE
 ##' @export
 plotly_html <- function(p, file) {
+  rlang::check_installed("htmlwidgets")
   htmlwidgets::saveWidget(p, file, libdir = ".plotly")
 }

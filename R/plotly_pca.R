@@ -10,7 +10,8 @@ plotly_pca <- function(pca,
                        legend = TRUE,
                        ...) {
   # Checks
-  stopifnot(class(pca) == "prcomp")
+  rlang::check_installed("plotly")
+  stopifnot(inherits(pca, "prcomp"))
   stopifnot(is.integer(comps))
   stopifnot(length(comps) == 2)
   if (!is.null(meta))

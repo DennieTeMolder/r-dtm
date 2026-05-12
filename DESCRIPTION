@@ -14,21 +14,15 @@ Imports:
     ggplot2,
     ggrepel,
     ggsci,
-    htmlwidgets,
     lifecycle,
     matrixStats,
-    plotly,
     purrr,
     readr,
     readxl,
     rlang,
     rrBLUP,
-    slider,
     stringr,
     tibble,
-    tidyr,
-    tools,
-    writexl,
-    yaml
+    tidyr
 Depends:
     tidyverse

@@ -7,7 +7,6 @@ Description: Personal library of R functions.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Imports: 
     cli,
     dplyr,
@@ -26,3 +25,10 @@ Imports:
     tidyr
 Depends:
     tidyverse
+Suggests:
+    htmlwidgets,
+    plotly,
+    rnaturalearth,
+    sf,
+    slider
+Config/roxygen2/version: 8.0.0

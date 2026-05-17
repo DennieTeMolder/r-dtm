@@ -25,6 +25,8 @@ Imports:
 Depends:
     tidyverse
 Suggests:
+    BEDASSLE,
+    carrier,
     htmlwidgets,
     plotly,
     rnaturalearth,

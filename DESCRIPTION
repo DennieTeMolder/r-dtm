@@ -19,7 +19,6 @@ Imports:
     readr,
     readxl,
     rlang,
-    rrBLUP,
     stringr,
     tibble,
     tidyr
@@ -29,6 +28,7 @@ Suggests:
     htmlwidgets,
     plotly,
     rnaturalearth,
+    rrBLUP,
     sf,
     slider
 Config/roxygen2/version: 8.0.0
